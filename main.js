@@ -307,11 +307,16 @@ function initThemeToggle() {
     }
   });
 
-  // Watch for Blazor/SPA DOM swaps to automatically restore icon paths
-  const observer = new MutationObserver(() => {
-    syncToggleIcon();
+  // Watch for Blazor/SPA DOM swaps to automatically restore icon paths (resilient loop prevention)
+  const observer = new MutationObserver((mutations) => {
+    const hasAddedNodes = mutations.some(m => m.addedNodes.length > 0);
+    if (hasAddedNodes) {
+      observer.disconnect();
+      syncToggleIcon();
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
   });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
 /**
