@@ -332,6 +332,18 @@ function initThemeToggle() {
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
+  // Blazor Enhanced Navigation load listener to restore html theme attribute
+  document.addEventListener('blazor-enhanced-load', () => {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let currentTheme = 'light';
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+      currentTheme = 'dark';
+    }
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    syncToggleIcon();
+  });
+
   // Bulletproof periodic fallback check (every 300ms) to ensure sync in all SPAs
   setInterval(syncToggleIcon, 300);
 }
