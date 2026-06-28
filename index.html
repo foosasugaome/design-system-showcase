@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nrmn.ui - Minimal Design System</title>
+  <meta name="description" content="A minimalistic, modern, and interactive grayscale design system and CSS framework template.">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      
+      const savedFont = localStorage.getItem('font');
+      if (savedFont && savedFont !== 'default') {
+        document.documentElement.setAttribute('data-font', savedFont);
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-brand-dot"></span>
+        <span>nrmn.ui</span>
+      </a>
+      
+      <div class="flex align-center" style="gap: 1.5rem;">
+        <nav>
+          <ul class="navbar-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger">
+                <span>Components</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="docs.html#typography">Typography</a></li>
+                <li><a href="docs.html#buttons">Buttons</a></li>
+                <li><a href="docs.html#icons">SVG Icons</a></li>
+                <li><a href="docs.html#badges">Badges</a></li>
+                <li><a href="docs.html#inputs">Inputs & Selects</a></li>
+                <li><a href="docs.html#cards">Cards</a></li>
+                <li><a href="docs.html#tabs">Tabs</a></li>
+                <li><a href="docs.html#alerts">Alerts & Dialogs</a></li>
+                <li><a href="docs.html#tables">Tables</a></li>
+                <li><a href="docs.html#skeletons">Skeleton Loaders</a></li>
+                <li><a href="docs.html#widgets">Interactive Widgets</a></li>
+                <li><a href="docs.html#preloaders">Preloaders & Loaders</a></li>
+              </ul>
+            </li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger">
+                <span>Templates</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="dashboard.html">Admin Dashboard</a></li>
+                <li><a href="auth.html">Sign In / Register</a></li>
+                <li><a href="blog.html">Split Blog Post</a></li>
+                <li><a href="settings.html">Settings Console</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <select id="font-switcher" class="select" aria-label="Switch Font" style="width: auto; padding: 0.25rem 1.75rem 0.25rem 0.5rem; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--radius-sm); border: 1px solid var(--border-color); cursor: pointer; height: 34px; line-height: 1.2; background-color: var(--bg-secondary); color: var(--text-primary); transition: border-color var(--transition-fast);">
+          <option value="default">Default</option>
+          <option value="inter">Inter</option>
+          <option value="roboto">Roboto</option>
+          <option value="ubuntu">Ubuntu</option>
+        </select>
+
+        <span class="command-palette-trigger" style="font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-tertiary); cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; height: 34px; line-height: 1.2; text-transform: uppercase; font-weight: 600;" title="Search Commands (Ctrl+K)" onclick="document.getElementById('command-palette').classList.add('open'); document.getElementById('command-search-input').focus();">⌘K</span>
+
+        <button id="theme-toggle" class="btn" aria-label="Toggle Theme" style="padding: 0.375rem; line-height: 1; border-radius: 50%; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; min-width: auto; box-shadow: none;">
+          <svg id="theme-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+        
+        <button class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero container">
+    <span class="hero-tag">CSS Framework Template</span>
+    <h1>The basis for minimalistic, modern user interfaces.</h1>
+    <p class="hero-subtitle">A responsive HTML/CSS design system featuring a clean dark/light grayscale palette, micro-interactions, and premium aesthetics.</p>
+    <div class="hero-actions">
+      <a href="docs.html" class="btn btn-primary">Explore Components</a>
+      <button onclick="showToast('Welcome to Antigravity UI! Enjoy the system.')" class="btn">Test Interactivity</button>
+    </div>
+  </section>
+
+  <!-- Key Features Grid -->
+  <main class="container section">
+    <div class="text-center mb-6">
+      <span class="sub-mono">Overview</span>
+      <h2>Designed for Speed & Style</h2>
+      <p style="max-width: 600px; margin: 0 auto;">No heavy libraries. Just standard, accessible, and easily extendable HTML, CSS, and clean JavaScript.</p>
+    </div>
+
+    <div class="features-grid">
+      <!-- Feature 1 -->
+      <div class="card">
+        <h3>Pure CSS Foundation</h3>
+        <p>Built with CSS Custom Properties to easily customize the dark/light variables. Modern layout templates and clean typography settings.</p>
+      </div>
+      <!-- Feature 2 -->
+      <div class="card">
+        <h3>Interactive Elements</h3>
+        <p>Buttons, inputs, menus, and overlays respond smoothly with subtle micro-animations that feel premium and responsive.</p>
+      </div>
+      <!-- Feature 3 -->
+      <div class="card">
+        <h3>Grayscale Aesthetics</h3>
+        <p>Curated shades of off-whites, grays, and true blacks that automatically adjust based on the browser's preferred color scheme.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Interactive Snippet Showcase -->
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 4rem; align-items: center;">
+      <div>
+        <span class="sub-mono">Interactive Sandbox</span>
+        <h2>Try out live feedback patterns</h2>
+        <p>Good design communicates state clearly. Antigravity UI utilizes toast notifications, subtle transitions, and focused states to guide user interaction.</p>
+        <div class="flex" style="gap: 1rem; margin-top: 1.5rem;">
+          <button onclick="showToast('Success! Data saved.')" class="btn">Launch Toast</button>
+          <button data-modal-target="showcase-modal" class="btn btn-primary">Open Sample Modal</button>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="flex justify-between align-center mb-4">
+            <span class="badge badge-success">Active Component</span>
+            <span style="font-size: 0.75rem; color: var(--text-tertiary);">Interactive Card</span>
+          </div>
+          <h3>System Settings</h3>
+          <p>This is a standard card component. Hover over it to see the smooth transform translation and shadow increase.</p>
+          <hr style="margin: 1rem 0;">
+          <div class="flex justify-between align-center">
+            <span style="font-size: 0.875rem; font-weight: 500;">Dark Theme Detection</span>
+            <span style="font-size: 0.75rem; color: var(--text-tertiary);">Auto-detect</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Sample Modal for Showcase -->
+  <div class="modal-overlay" id="showcase-modal">
+    <div class="modal-content">
+      <button class="modal-close" data-modal-close>&times;</button>
+      <span class="sub-mono">Core Dialog</span>
+      <h3>Sample Interactive Modal</h3>
+      <p>This modal includes a smooth scale transition and locks background scrolling while open. Press ESC or click the background to close.</p>
+      <div class="flex" style="gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+        <button class="btn" data-modal-close>Cancel</button>
+        <button class="btn btn-primary" onclick="showToast('Action Confirmed!'); closeModal(document.getElementById('showcase-modal'))">Confirm Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 6rem; background-color: var(--bg-secondary);">
+    <div class="container flex justify-between align-center" style="flex-wrap: wrap; gap: 1.5rem;">
+      <div>
+        <span style="font-weight: 700; color: var(--text-primary);">nrmn.ui</span>
+        <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: var(--text-tertiary);">A minimalistic grayscale CSS framework template.</p>
+      </div>
+      <div class="flex" style="gap: 1.5rem;">
+        <a href="docs.html" style="font-size: 0.875rem; text-decoration: none; color: var(--text-secondary);">Documentation</a>
+        <a href="dashboard.html" style="font-size: 0.875rem; text-decoration: none; color: var(--text-secondary);">Dashboard</a>
+        <a href="auth.html" style="font-size: 0.875rem; text-decoration: none; color: var(--text-secondary);">Account</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Command Palette Modal -->
+  <div class="command-palette-overlay" id="command-palette">
+    <div class="command-palette-content">
+      <div class="command-palette-search-wrapper">
+        <div class="command-palette-search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <input type="text" id="command-search-input" class="command-palette-input" placeholder="Search pages, components or controls..." autocomplete="off">
+      </div>
+      
+      <ul class="command-palette-list" id="command-palette-list"></ul>
+      
+      <div class="command-palette-footer">
+        <div class="command-palette-footer-keys">
+          <span>Navigate: <span class="command-palette-key">↑</span> <span class="command-palette-key">↓</span></span>
+          <span style="margin-left: 1rem;">Select: <span class="command-palette-key">Enter</span></span>
+        </div>
+        <div>
+          <span>Close: <span class="command-palette-key">Esc</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

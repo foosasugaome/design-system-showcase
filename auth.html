@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - nrmn.ui</title>
+  <meta name="description" content="Secure login and account creation portal styled with the nrmn.ui design system.">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      
+      const savedFont = localStorage.getItem('font');
+      if (savedFont && savedFont !== 'default') {
+        document.documentElement.setAttribute('data-font', savedFont);
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-brand-dot"></span>
+        <span>nrmn.ui</span>
+      </a>
+      
+      <div class="flex align-center" style="gap: 1.5rem;">
+        <nav>
+          <ul class="navbar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger">
+                <span>Components</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="docs.html#typography">Typography</a></li>
+                <li><a href="docs.html#buttons">Buttons</a></li>
+                <li><a href="docs.html#icons">SVG Icons</a></li>
+                <li><a href="docs.html#badges">Badges</a></li>
+                <li><a href="docs.html#inputs">Inputs & Selects</a></li>
+                <li><a href="docs.html#cards">Cards</a></li>
+                <li><a href="docs.html#tabs">Tabs</a></li>
+                <li><a href="docs.html#alerts">Alerts & Dialogs</a></li>
+                <li><a href="docs.html#tables">Tables</a></li>
+                <li><a href="docs.html#skeletons">Skeleton Loaders</a></li>
+                <li><a href="docs.html#widgets">Interactive Widgets</a></li>
+                <li><a href="docs.html#preloaders">Preloaders & Loaders</a></li>
+              </ul>
+            </li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger">
+                <span>Templates</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="dashboard.html">Admin Dashboard</a></li>
+                <li><a href="auth.html">Sign In / Register</a></li>
+                <li><a href="blog.html">Split Blog Post</a></li>
+                <li><a href="settings.html">Settings Console</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <select id="font-switcher" class="select" aria-label="Switch Font" style="width: auto; padding: 0.25rem 1.75rem 0.25rem 0.5rem; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--radius-sm); border: 1px solid var(--border-color); cursor: pointer; height: 34px; line-height: 1.2; background-color: var(--bg-secondary); color: var(--text-primary); transition: border-color var(--transition-fast);">
+          <option value="default">Default</option>
+          <option value="inter">Inter</option>
+          <option value="roboto">Roboto</option>
+          <option value="ubuntu">Ubuntu</option>
+        </select>
+
+        <span class="command-palette-trigger" style="font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-tertiary); cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; height: 34px; line-height: 1.2; text-transform: uppercase; font-weight: 600;" title="Search Commands (Ctrl+K)" onclick="document.getElementById('command-palette').classList.add('open'); document.getElementById('command-search-input').focus();">⌘K</span>
+
+        <button id="theme-toggle" class="btn" aria-label="Toggle Theme" style="padding: 0.375rem; line-height: 1; border-radius: 50%; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; min-width: auto; box-shadow: none;">
+          <svg id="theme-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+        
+        <button class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth Layout Wrapper -->
+  <div class="auth-wrapper">
+    <div class="card auth-card">
+      <div class="tab-container" style="margin: 0;">
+        <div class="tab-buttons" style="justify-content: center; margin-bottom: 1.5rem;">
+          <button class="tab-btn active" data-tab="login">Sign In</button>
+          <button class="tab-btn" data-tab="register">Sign Up</button>
+        </div>
+
+        <!-- Login Form Panel -->
+        <div class="tab-panel active" data-tab="login">
+          <div class="text-center mb-4">
+            <h2>Welcome Back</h2>
+            <p style="font-size: 0.875rem;">Enter your credentials to manage your design projects.</p>
+          </div>
+
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email Address</label>
+              <input type="email" class="input" id="login-email" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <div class="flex justify-between align-center mb-1">
+                <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
+                <a href="#" onclick="showToast('Reset password link dispatched!')" style="font-size: 0.75rem; color: var(--text-tertiary); text-decoration: none;">Forgot password?</a>
+              </div>
+              <input type="password" class="input" id="login-password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full" style="margin-top: 1rem;">Authenticate Account</button>
+          </form>
+        </div>
+
+        <!-- Register Form Panel -->
+        <div class="tab-panel" data-tab="register">
+          <div class="text-center mb-4">
+            <h2>Create Account</h2>
+            <p style="font-size: 0.875rem;">Get started with our lightweight design framework.</p>
+          </div>
+
+          <form id="register-form">
+            <div class="form-group">
+              <label class="form-label" for="reg-name">Full Name</label>
+              <input type="text" class="input" id="reg-name" placeholder="Ada Lovelace" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-email">Email Address</label>
+              <input type="email" class="input" id="reg-email" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="reg-password">Password</label>
+              <input type="password" class="input" id="reg-password" placeholder="Min. 8 characters" minlength="8" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full" style="margin-top: 1rem;">Register Credentials</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal -->
+  <div class="command-palette-overlay" id="command-palette">
+    <div class="command-palette-content">
+      <div class="command-palette-search-wrapper">
+        <div class="command-palette-search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <input type="text" id="command-search-input" class="command-palette-input" placeholder="Search pages, components or controls..." autocomplete="off">
+      </div>
+      
+      <ul class="command-palette-list" id="command-palette-list"></ul>
+      
+      <div class="command-palette-footer">
+        <div class="command-palette-footer-keys">
+          <span>Navigate: <span class="command-palette-key">↑</span> <span class="command-palette-key">↓</span></span>
+          <span style="margin-left: 1rem;">Select: <span class="command-palette-key">Enter</span></span>
+        </div>
+        <div>
+          <span>Close: <span class="command-palette-key">Esc</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

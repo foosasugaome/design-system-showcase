@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components - nrmn.ui</title>
+  <meta name="description" content="Explore and test individual components of the nrmn.ui design system.">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      
+      const savedFont = localStorage.getItem('font');
+      if (savedFont && savedFont !== 'default') {
+        document.documentElement.setAttribute('data-font', savedFont);
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-brand-dot"></span>
+        <span>nrmn.ui</span>
+      </a>
+      
+      <div class="flex align-center" style="gap: 1.5rem;">
+        <nav>
+          <ul class="navbar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger active">
+                <span>Components</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="docs.html#typography">Typography</a></li>
+                <li><a href="docs.html#buttons">Buttons</a></li>
+                <li><a href="docs.html#icons">SVG Icons</a></li>
+                <li><a href="docs.html#badges">Badges</a></li>
+                <li><a href="docs.html#inputs">Inputs & Selects</a></li>
+                <li><a href="docs.html#cards">Cards</a></li>
+                <li><a href="docs.html#tabs">Tabs</a></li>
+                <li><a href="docs.html#alerts">Alerts & Dialogs</a></li>
+                <li><a href="docs.html#tables">Tables</a></li>
+                <li><a href="docs.html#skeletons">Skeleton Loaders</a></li>
+                <li><a href="docs.html#widgets">Interactive Widgets</a></li>
+                <li><a href="docs.html#preloaders">Preloaders & Loaders</a></li>
+              </ul>
+            </li>
+            <li class="nav-dropdown">
+              <a href="#" class="dropdown-trigger">
+                <span>Templates</span>
+                <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="dashboard.html">Admin Dashboard</a></li>
+                <li><a href="auth.html">Sign In / Register</a></li>
+                <li><a href="blog.html">Split Blog Post</a></li>
+                <li><a href="settings.html">Settings Console</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <select id="font-switcher" class="select" aria-label="Switch Font" style="width: auto; padding: 0.25rem 1.75rem 0.25rem 0.5rem; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--radius-sm); border: 1px solid var(--border-color); cursor: pointer; height: 34px; line-height: 1.2; background-color: var(--bg-secondary); color: var(--text-primary); transition: border-color var(--transition-fast);">
+          <option value="default">Default</option>
+          <option value="inter">Inter</option>
+          <option value="roboto">Roboto</option>
+          <option value="ubuntu">Ubuntu</option>
+        </select>
+
+        <span class="command-palette-trigger" style="font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-tertiary); cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; height: 34px; line-height: 1.2; text-transform: uppercase; font-weight: 600;" title="Search Commands (Ctrl+K)" onclick="document.getElementById('command-palette').classList.add('open'); document.getElementById('command-search-input').focus();">⌘K</span>
+
+        <button id="theme-toggle" class="btn" aria-label="Toggle Theme" style="padding: 0.375rem; line-height: 1; border-radius: 50%; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; min-width: auto; box-shadow: none;">
+          <svg id="theme-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+        
+        <button class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar Layout -->
+  <div class="sidebar-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-title">General</li>
+        <li class="sidebar-nav-item"><a href="#typography">Typography</a></li>
+        <li class="sidebar-nav-item"><a href="#buttons">Buttons</a></li>
+        <li class="sidebar-nav-item"><a href="#icons">SVG Icons</a></li>
+        <li class="sidebar-nav-item"><a href="#badges">Badges</a></li>
+        
+        <li class="sidebar-nav-title">Forms</li>
+        <li class="sidebar-nav-item"><a href="#inputs">Inputs & Selects</a></li>
+        
+        <li class="sidebar-nav-title">Components</li>
+        <li class="sidebar-nav-item"><a href="#cards">Cards</a></li>
+        <li class="sidebar-nav-item"><a href="#tabs">Tabs</a></li>
+        <li class="sidebar-nav-item"><a href="#alerts">Alerts & Dialogs</a></li>
+        <li class="sidebar-nav-item"><a href="#tables">Tables</a></li>
+        <li class="sidebar-nav-item"><a href="#skeletons">Skeleton Loaders</a></li>
+        <li class="sidebar-nav-item"><a href="#widgets">Interactive Widgets</a></li>
+        <li class="sidebar-nav-item"><a href="#preloaders">Preloaders & Loaders</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <section class="mb-6">
+        <h1>Component Showcase</h1>
+        <p>This is the documentation and playground for all the built-in UI patterns within nrmn.ui. Every element supports dark/light mode and smooth keyboard focus indicators.</p>
+      </section>
+
+      <hr>
+
+      <section id="typography" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Core Styling</span>
+        <h2>Typography</h2>
+        <p>Clean typography hierarchy utilizing system-native geometric sans-serif fonts.</p>
+        
+        <div class="card">
+          <h1>Heading 1 (2.25rem)</h1>
+          <h2>Heading 2 (1.75rem)</h2>
+          <h3>Heading 3 (1.35rem)</h3>
+          <h4>Heading 4 (1.15rem)</h4>
+          <p>Paragraph text (1rem) - This is standard body text styling. It has an line-height of 1.5 for maximum legibility and uses <code>--text-secondary</code> for comfortable contrast.</p>
+          <p>You can also use <a href="#">inline links</a> which have custom hover transition offsets, or <code>inline code blocks</code> for developer notations.</p>
+        </div>
+      </section>
+
+      <section id="buttons" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Interactive Actions</span>
+        <h2>Buttons</h2>
+        <p>Buttons support hover transitions, active press offsets, custom focus outlines, and shadow changes.</p>
+        
+        <div class="card flex" style="flex-wrap: wrap; gap: 1rem;">
+          <button class="btn">Default Button</button>
+          <button class="btn btn-primary">Primary Button</button>
+          <button class="btn" disabled>Disabled Button</button>
+          <button onclick="showToast('Initiating process...')" class="btn btn-primary">Submit Demo</button>
+        </div>
+      </section>
+
+      <section id="icons" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Vector Shapes</span>
+        <h2>SVG Icons</h2>
+        <p>A lightweight geometric icon set designed to align inline with text and interactive button controls.</p>
+        
+        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 1rem;">Standard Icon Catalog</h4>
+            <div class="flex" style="flex-wrap: wrap; gap: 1.5rem;">
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">home</span>
+              </div>
+              
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">settings</span>
+              </div>
+              
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">user</span>
+              </div>
+              
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">search</span>
+              </div>
+              
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">trash</span>
+              </div>
+              
+              <div class="flex align-center gap-2" style="border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); background-color: var(--bg-primary);">
+                <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary);">bell</span>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 1rem;">Action Buttons with Icons</h4>
+            <div class="flex" style="flex-wrap: wrap; gap: 1rem;">
+              <button class="btn btn-icon">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Return Home</span>
+              </button>
+              <button class="btn btn-primary btn-icon">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Save Configuration</span>
+              </button>
+              <button class="btn btn-icon" style="color: #ef4444; border-color: rgba(239,68,68,0.2);">
+                <svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                <span>Delete Workspace</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="badges" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">State Tokens</span>
+        <h2>Badges</h2>
+        <p>Small status indicator labels for labeling, categorizing, or count tags.</p>
+        
+        <div class="card flex" style="flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+          <span class="badge">Default</span>
+          <span class="badge badge-success">Success</span>
+          <span class="badge badge-warning">Warning</span>
+          <span class="badge badge-error">Error</span>
+        </div>
+      </section>
+
+      <section id="inputs" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">User Inputs</span>
+        <h2>Inputs & Selects</h2>
+        <p>Form fields with consistent hover boundaries, focus ring feedback, and spacing patterns.</p>
+        
+        <div class="card">
+          <form style="max-width: 500px;">
+            <div class="form-group">
+              <label class="form-label" for="username-field">Username</label>
+              <input type="text" class="input" id="username-field" placeholder="e.g., satoshi" required>
+              <span class="form-help">Enter your unique handle.</span>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="role-field">System Role</label>
+              <select class="select" id="role-field">
+                <option value="admin">Administrator</option>
+                <option value="dev">Developer</option>
+                <option value="user">Standard User</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="notes-field">Bio</label>
+              <textarea class="textarea" id="notes-field" rows="3" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h4 style="margin-top: 0; margin-bottom: 1rem;">Search Inputs & Button Groups</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Combine inputs, inline icons, dynamic clear buttons, and attached action triggers.</p>
+          
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div>
+              <span class="sub-mono">Inline Search Group</span>
+              <div class="search-group" style="margin-top: 0.5rem;">
+                <input type="text" class="input" placeholder="Search databases..." aria-label="Search databases">
+                <button class="btn btn-primary" onclick="showToast('Query submitted: ' + this.previousElementSibling.value)">Search</button>
+              </div>
+            </div>
+            
+            <div>
+              <span class="sub-mono">Icon Prefix & Clear Trigger</span>
+              <div class="search-input-wrapper" style="margin-top: 0.5rem;">
+                <span class="search-icon-left">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input type="text" class="input" placeholder="Filter repositories..." id="filter-input-demo" aria-label="Filter repositories" oninput="const clear = this.nextElementSibling; clear.style.display = this.value ? 'flex' : 'none';">
+                <button class="search-clear-right" style="display: none;" onclick="const inp = document.getElementById('filter-input-demo'); inp.value = ''; this.style.display = 'none'; inp.focus();" aria-label="Clear text">
+                  &times;
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+            <span class="sub-mono">Live Database Autocomplete</span>
+            <div style="position: relative; margin-top: 0.5rem; max-width: 500px;">
+              <div class="search-input-wrapper">
+                <span class="search-icon-left">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input type="text" class="input" placeholder="Search database (e.g., Ada, turing, css, index)..." id="db-search-input" aria-label="Search database" autocomplete="off">
+                <button class="search-clear-right" style="display: none;" id="db-search-clear" aria-label="Clear search">
+                  &times;
+                </button>
+              </div>
+              <ul class="autocomplete-dropdown" id="db-autocomplete-dropdown"></ul>
+            </div>
+            <span class="form-help">Type characters to query mock database rows (users, repos, and files). Supports arrow navigation.</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h4 style="margin-top: 0; margin-bottom: 1rem;">Advanced Form Elements</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 2rem;">Modern interaction patterns for toggles, strength verification, sliders, and drag upload areas.</p>
+          
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <!-- Left Column: Password Strength & Toggles -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <span class="sub-mono">Password Strength Validator</span>
+                <div class="form-group" style="margin-top: 0.5rem;">
+                  <input type="password" class="input" id="pass-strength-field" placeholder="Create a secure password">
+                  <div class="strength-bar-container">
+                    <div class="strength-bar" id="pass-strength-bar"></div>
+                  </div>
+                  <ul class="strength-checklist">
+                    <li id="rule-length" class="invalid">Minimum 8 characters</li>
+                    <li id="rule-number" class="invalid">At least one number</li>
+                    <li id="rule-special" class="invalid">At least one special character (@$!%*?&)</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Segmented Switch Control</span>
+                <div style="margin-top: 0.5rem;">
+                  <div class="segmented-control">
+                    <input type="radio" name="billing-docs" id="billing-monthly" checked>
+                    <label for="billing-monthly">Monthly</label>
+                    <input type="radio" name="billing-docs" id="billing-yearly">
+                    <label for="billing-yearly">Yearly (Save 20%)</label>
+                    <span class="segmented-slider"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Switch Toggle Control</span>
+                <div style="margin-top: 0.5rem;">
+                  <label class="switch-label">
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Enable API Access</span>
+                    <div class="switch">
+                      <input type="checkbox" id="api-switch" onchange="showToast(this.checked ? 'API credentials enabled' : 'API credentials disabled')">
+                      <span class="switch-slider"></span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Column: Range Slider & Uploader -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <span class="sub-mono">Range Slider with Tooltip</span>
+                <div class="range-container">
+                  <input type="range" class="range-slider" id="volume-slider" min="0" max="100" value="50">
+                  <span class="range-tooltip" id="volume-tooltip">50%</span>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Drag & Drop File Uploader</span>
+                <div style="margin-top: 0.5rem;">
+                  <div class="uploader-zone" id="drop-zone">
+                    <div class="uploader-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                      </svg>
+                    </div>
+                    <div class="uploader-text" id="drop-text">Drag & drop files here or click to upload</div>
+                    <input type="file" id="drop-file-input" style="display: none;">
+                    <div class="uploader-progress" id="drop-progress">
+                      <div class="uploader-progress-bar" id="drop-progress-bar"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h4 style="margin-top: 0; margin-bottom: 1rem;">Specialized Inputs & Custom Toggles</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 2rem;">Customized components for structured text formats and pure CSS selection indicators.</p>
+          
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+            <!-- Left Column: Telephone, Email suggest, Date pickers -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <span class="sub-mono">Telephone Number Input</span>
+                <div style="margin-top: 0.5rem;">
+                  <div class="telephone-group">
+                    <select class="select country-code-select" aria-label="Country Code">
+                      <option value="+1">🇺🇸 +1</option>
+                      <option value="+44">🇬🇧 +44</option>
+                      <option value="+81">🇯🇵 +81</option>
+                      <option value="+49">🇩🇪 +49</option>
+                    </select>
+                    <input type="tel" class="input tel-input" placeholder="(555) 000-0000" aria-label="Phone number">
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Email Domain Suggestion</span>
+                <div style="margin-top: 0.5rem; position: relative;">
+                  <input type="email" class="input" id="email-suggest-input" placeholder="Type email prefix..." autocomplete="off">
+                  <ul class="autocomplete-dropdown" id="email-suggest-dropdown"></ul>
+                  <span class="validation-message" id="email-validation-msg"></span>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Premium Date Picker</span>
+                <div style="margin-top: 0.5rem;">
+                  <div class="date-input-wrapper">
+                    <input type="date" class="input date-input" id="date-picker-demo" aria-label="Choose date">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Column: Radio and Checkboxes -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <span class="sub-mono">Custom Radio Options</span>
+                <div style="margin-top: 0.75rem;">
+                  <div class="custom-radio-group">
+                    <label class="custom-radio">
+                      <input type="radio" name="custom-radio-demo" checked>
+                      <span class="radio-indicator"></span>
+                      <span>Standard Options Configuration</span>
+                    </label>
+                    <label class="custom-radio">
+                      <input type="radio" name="custom-radio-demo">
+                      <span class="radio-indicator"></span>
+                      <span>Extended Enterprise Features</span>
+                    </label>
+                    <label class="custom-radio">
+                      <input type="radio" name="custom-radio-demo">
+                      <span class="radio-indicator"></span>
+                      <span>Restricted Sandbox Node Access</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <span class="sub-mono">Custom Checkbox Options</span>
+                <div style="margin-top: 0.75rem;">
+                  <div class="custom-checkbox-group">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" checked>
+                      <span class="checkbox-indicator"></span>
+                      <span>Send system status alerts email</span>
+                    </label>
+                    <label class="custom-checkbox">
+                      <input type="checkbox">
+                      <span class="checkbox-indicator"></span>
+                      <span>Require secure verification signatures</span>
+                    </label>
+                    <label class="custom-checkbox">
+                      <input type="checkbox">
+                      <span class="checkbox-indicator"></span>
+                      <span>Cache queries compilation outputs</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cards" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Surfaces & Containers</span>
+        <h2>Cards</h2>
+        <p>Content containers that feature smooth lifts and shadow enlargement on mouse hover.</p>
+        
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+          <div class="card">
+            <h3>Standard Card</h3>
+            <p>Simple layout for grids or general text components.</p>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--accent);">
+            <h3>Accent Header</h3>
+            <p>Highlight important items by giving them an accent border header.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="tabs" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Toggle Panels</span>
+        <h2>Tabs</h2>
+        <p>A CSS/JS hybrid tab component for toggling in-page content states.</p>
+        
+        <div class="card">
+          <div class="tab-container">
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-tab="tab1">Overview</button>
+              <button class="tab-btn" data-tab="tab2">Security</button>
+              <button class="tab-btn" data-tab="tab3">API Access</button>
+            </div>
+            <div class="tab-panel active" data-tab="tab1">
+              <h4>System Status</h4>
+              <p>Everything is operating normally. Average response latency: 45ms. CPU load: 12%.</p>
+            </div>
+            <div class="tab-panel" data-tab="tab2">
+              <h4>Security Configurations</h4>
+              <p>Two-factor authentication is required for all administrative roles. Last audited on June 25th.</p>
+            </div>
+            <div class="tab-panel" data-tab="tab3">
+              <h4>Developer Credentials</h4>
+              <p>Generate secure API tokens in your environment settings dashboard to read resources.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="alerts" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Feedback Signals</span>
+        <h2>Alerts & Dialogs</h2>
+        <p>Direct system feedback, inline notifications, and overlay modals.</p>
+        
+        <div class="card">
+          <div class="alert-box alert-box-info">
+            <div><strong>Info:</strong> Update available. A newer version of the design system is ready.</div>
+          </div>
+          <div class="alert-box alert-box-success">
+            <div><strong>Success:</strong> Your project configurations have been updated.</div>
+          </div>
+          <div class="alert-box alert-box-warning">
+            <div><strong>Warning:</strong> Disk quota usage is approaching 90%.</div>
+          </div>
+          <div class="alert-box alert-box-error">
+            <div><strong>Error:</strong> Failed to fetch remote schema definitions. Please retry.</div>
+          </div>
+          
+          <div class="mt-4 flex" style="gap: 1rem;">
+            <button data-modal-target="docs-modal" class="btn">Open Modal Dialog</button>
+            <button onclick="showToast('Toast Notification triggered from documentation page.')" class="btn btn-primary">Trigger Toast</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tables" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Tabular Metrics</span>
+        <h2>Tables</h2>
+        <p>Formatted data grids featuring hover rows and structured alignments.</p>
+        
+        <div class="card" style="padding: 0.5rem; overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Resource Path</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Latency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>/v1/users</code></td>
+                <td>GET</td>
+                <td><span class="badge badge-success">200 OK</span></td>
+                <td>12ms</td>
+              </tr>
+              <tr>
+                <td><code>/v1/billing</code></td>
+                <td>POST</td>
+                <td><span class="badge badge-error">500 ERR</span></td>
+                <td>180ms</td>
+              </tr>
+              <tr>
+                <td><code>/v1/health</code></td>
+                <td>GET</td>
+                <td><span class="badge badge-success">200 OK</span></td>
+                <td>4ms</td>
+              </tr>
+              <tr>
+                <td><code>/v1/auth/token</code></td>
+                <td>POST</td>
+                <td><span class="badge badge-warning">401 UNA</span></td>
+                <td>42ms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="skeletons" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Loading States</span>
+        <h2>Skeleton Loaders</h2>
+        <p>Diffused shimmer states utilized during background network requests.</p>
+        
+        <div class="card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Profile Card Skeleton -->
+          <div class="flex align-center" style="gap: 1rem;">
+            <div class="skeleton skeleton-circle"></div>
+            <div style="flex: 1;">
+              <div class="skeleton skeleton-title" style="margin-bottom: 6px; width: 35%;"></div>
+              <div class="skeleton skeleton-text short" style="margin-bottom: 0;"></div>
+            </div>
+          </div>
+          
+          <!-- Content Body Skeleton -->
+          <div>
+            <div class="skeleton skeleton-text" style="margin-bottom: 8px;"></div>
+            <div class="skeleton skeleton-text medium" style="margin-bottom: 8px;"></div>
+            <div class="skeleton skeleton-text short" style="margin-bottom: 0;"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="widgets" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Advanced Elements</span>
+        <h2>Interactive Widgets</h2>
+        <p>Accordions and slide-out navigation drawers to manage complex disclosures.</p>
+        
+        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 1rem;">Accordion FAQ Panel</h4>
+            <div class="accordion-group">
+              <div class="accordion">
+                <button class="accordion-header">
+                  <span>How do I customize the grayscale palette?</span>
+                  <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Modify the CSS color variable definitions inside the root blocks of <code>base.css</code>. The themes will automatically apply the changes.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="accordion">
+                <button class="accordion-header">
+                  <span>Can I use this for production environments?</span>
+                  <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Absolutely. The system uses raw, vanilla CSS and HTML5 structures, ensuring extreme performance and minimal load overhead.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 1rem;">Slide-Out Drawer Panel</h4>
+            <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1rem;">Drawers slide in from the right edge and overlay background content securely.</p>
+            <button class="btn" data-drawer-target="docs-drawer">Open Config Drawer</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="preloaders" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Transition States</span>
+        <h2>Preloaders & Loaders</h2>
+        <p>Progress bars and modal blocking layouts utilized during long network queries or critical database updates.</p>
+        
+        <div class="card">
+          <h4 style="margin-top: 0; margin-bottom: 1rem;">Simulate Action States</h4>
+          <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1.5rem;">Test both loading mechanics live. The Top Progress Bar runs dynamically across the header, whereas the Blocking Loader overlays the page viewport.</p>
+          <div class="flex" style="gap: 1rem; flex-wrap: wrap;">
+            <button onclick="simulateTopBarProgress()" class="btn">Trigger Top Progress Bar</button>
+            <button onclick="simulateBlockingLoader()" class="btn btn-primary">Trigger Blocking Loader</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Dialog Modal -->
+  <div class="modal-overlay" id="docs-modal">
+    <div class="modal-content">
+      <button class="modal-close" data-modal-close>&times;</button>
+      <h3>System Confirmation</h3>
+      <p>Are you sure you want to deploy the current changes to production? This operation is irreversible.</p>
+      <div class="flex" style="gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+        <button class="btn" data-modal-close>Dismiss</button>
+        <button class="btn btn-primary" onclick="showToast('Deploy initiated.'); closeModal(document.getElementById('docs-modal'))">Deploy Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-Out Configuration Drawer -->
+  <div class="drawer-overlay" id="docs-drawer">
+    <div class="drawer">
+      <div class="drawer-header">
+        <h3>Workspace Config</h3>
+        <button class="drawer-close" data-drawer-close>&times;</button>
+      </div>
+      <div class="drawer-body">
+        <p class="mb-4" style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">Configure localized settings for the active workspace folder context.</p>
+        
+        <div class="form-group">
+          <label class="form-label">Default Repository Path</label>
+          <input type="text" class="input" value="C:/Users/user/Projects/design-system-showcase" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Font Family Override</label>
+          <select class="select" onchange="const sw = document.getElementById('font-switcher'); if(sw) { sw.value = this.value; sw.dispatchEvent(new Event('change')); }">
+            <option value="default">Default System</option>
+            <option value="inter">Inter (Google Fonts)</option>
+            <option value="roboto">Roboto (Google Fonts)</option>
+            <option value="ubuntu">Ubuntu (Google Fonts)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Auto-Refresh Interval</label>
+          <select class="select">
+            <option>Every 5 seconds</option>
+            <option>Every 30 seconds</option>
+            <option>Never (Manual)</option>
+          </select>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <button class="btn btn-primary w-full" data-drawer-close>Apply & Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal -->
+  <div class="command-palette-overlay" id="command-palette">
+    <div class="command-palette-content">
+      <div class="command-palette-search-wrapper">
+        <div class="command-palette-search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <input type="text" id="command-search-input" class="command-palette-input" placeholder="Search pages, components or controls..." autocomplete="off">
+      </div>
+      
+      <ul class="command-palette-list" id="command-palette-list"></ul>
+      
+      <div class="command-palette-footer">
+        <div class="command-palette-footer-keys">
+          <span>Navigate: <span class="command-palette-key">↑</span> <span class="command-palette-key">↓</span></span>
+          <span style="margin-left: 1rem;">Select: <span class="command-palette-key">Enter</span></span>
+        </div>
+        <div>
+          <span>Close: <span class="command-palette-key">Esc</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
