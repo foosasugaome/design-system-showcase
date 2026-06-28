@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initEmailSuggestion();
   initPhoneFormatter();
   initEmailValidation();
+  initCodeCopy();
+  initPlayground();
 });
 
 /**
@@ -1200,12 +1202,219 @@ function initEmailValidation() {
   });
 }
 
+/**
+ * Interactive Code Blocks Copy Handler
+ */
+function initCodeCopy() {
+  const preElements = document.querySelectorAll('pre');
+  
+  preElements.forEach(pre => {
+    // Check if already wrapped
+    let wrapper = pre.parentElement;
+    if (!wrapper.classList.contains('code-block-wrapper')) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+    }
+    
+    // Check if button already exists (to avoid duplicate initialization on update)
+    if (wrapper.querySelector('.copy-code-btn')) return;
+    
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-code-btn';
+    copyBtn.type = 'button';
+    copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
+    
+    // SVG icons for Copy and Check
+    const copyIcon = `<svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const checkIcon = `<svg class="icon icon-sm" viewBox="0 0 24 24" style="stroke: #10b981;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    
+    copyBtn.innerHTML = `${copyIcon}<span>Copy</span>`;
+    wrapper.appendChild(copyBtn);
+    
+    copyBtn.addEventListener('click', () => {
+      const codeElement = pre.querySelector('code');
+      const textToCopy = codeElement ? codeElement.innerText : pre.innerText;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copyBtn.innerHTML = `${checkIcon}<span style="color: #10b981;">Copied!</span>`;
+        copyBtn.classList.add('copied');
+        
+        if (window.showToast) {
+          window.showToast('Code copied to clipboard!');
+        }
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = `${copyIcon}<span>Copy</span>`;
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+        if (window.showToast) {
+          window.showToast('Failed to copy code block.');
+        }
+      });
+    });
+  });
+}
 
+/**
+ * Interactive Component Playground Logic
+ */
+function initPlayground() {
+  const compType = document.getElementById('play-type');
+  const compText = document.getElementById('play-text');
+  const compPadding = document.getElementById('play-padding');
+  const compRadius = document.getElementById('play-radius');
+  const compBg = document.getElementById('play-bg');
+  const compTextColor = document.getElementById('play-textcolor');
+  const compShadow = document.getElementById('play-shadow');
+  
+  const previewPane = document.getElementById('play-preview-pane');
+  const codeOutputHtml = document.getElementById('play-code-html');
+  const codeOutputCss = document.getElementById('play-code-css');
+  
+  if (!compType || !previewPane) return;
+  
+  function updatePlayground() {
+    const type = compType.value;
+    const textVal = compText.value || (type === 'button' ? 'Click Me' : 'Card Title');
+    const paddingVal = compPadding.value;
+    const radiusVal = compRadius.value;
+    const bgVal = compBg.value;
+    const textColVal = compTextColor.value;
+    const shadowVal = compShadow.value;
+    
+    // Clear and build preview
+    previewPane.innerHTML = '';
+    
+    // Formulate inline styles
+    let elementStyles = `padding: ${paddingVal}px; border-radius: ${radiusVal}px; `;
+    
+    // BG logic
+    if (bgVal === 'accent') {
+      elementStyles += `background-color: var(--accent); `;
+    } else {
+      elementStyles += `background-color: var(--bg-${bgVal}); `;
+    }
+    
+    // Text Color logic
+    if (textColVal === 'accent-foreground') {
+      elementStyles += `color: var(--accent-foreground); `;
+    } else {
+      elementStyles += `color: var(--text-${textColVal}); `;
+    }
+    
+    // Shadow logic
+    let shadowCss = '';
+    if (shadowVal !== 'none') {
+      elementStyles += `box-shadow: var(--shadow-${shadowVal}); `;
+      shadowCss = `\n  box-shadow: var(--shadow-${shadowVal});`;
+    }
+    
+    // Border logic
+    if (bgVal !== 'accent' && bgVal !== 'tertiary') {
+      elementStyles += `border: 1px solid var(--border-color); `;
+    } else {
+      elementStyles += `border: none; `;
+    }
+    
+    let previewElement;
+    let htmlCode = '';
+    
+    if (type === 'button') {
+      previewElement = document.createElement('button');
+      previewElement.className = 'playground-preview-element btn';
+      previewElement.innerText = textVal;
+      previewElement.setAttribute('style', elementStyles);
+      previewPane.appendChild(previewElement);
+      
+      const borderMarkup = (bgVal !== 'accent' && bgVal !== 'tertiary') ? '\n  border: 1px solid var(--border-color);' : '';
+      const bgMarkup = bgVal === 'accent' ? 'var(--accent)' : `var(--bg-${bgVal})`;
+      const textMarkup = textColVal === 'accent-foreground' ? 'var(--accent-foreground)' : `var(--text-${textColVal})`;
+      
+      htmlCode = `<button class="btn custom-btn">${textVal}</button>`;
+      
+      codeOutputCss.innerText = `.custom-btn {
+  padding: ${paddingVal}px;
+  border-radius: ${radiusVal}px;
+  background-color: ${bgMarkup};
+  color: ${textMarkup};${borderMarkup}${shadowCss}
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
 
-
-
-
-
-
-
-
+.custom-btn:active {
+  transform: scale(0.98);
+}`;
+    } else {
+      previewElement = document.createElement('div');
+      previewElement.className = 'playground-preview-element card';
+      previewElement.setAttribute('style', `${elementStyles} width: 100%; max-width: 380px; text-align: left; display: block;`);
+      
+      const title = document.createElement('h3');
+      title.style.marginTop = '0';
+      title.style.marginBottom = '0.5rem';
+      title.innerText = textVal;
+      
+      const desc = document.createElement('p');
+      desc.style.margin = '0';
+      desc.style.fontSize = '0.875rem';
+      desc.style.color = textColVal === 'primary' ? 'var(--text-secondary)' : 'inherit';
+      desc.style.opacity = textColVal === 'accent-foreground' ? '0.8' : '1';
+      desc.innerText = 'This card component was generated and styled dynamically using nrmn.ui tokens.';
+      
+      previewElement.appendChild(title);
+      previewElement.appendChild(desc);
+      previewPane.appendChild(previewElement);
+      
+      const borderMarkup = (bgVal !== 'accent' && bgVal !== 'tertiary') ? '\n  border: 1px solid var(--border-color);' : '';
+      const bgMarkup = bgVal === 'accent' ? 'var(--accent)' : `var(--bg-${bgVal})`;
+      const textMarkup = textColVal === 'accent-foreground' ? 'var(--accent-foreground)' : `var(--text-${textColVal})`;
+      
+      htmlCode = `<div class="card custom-card">
+  <h3>${textVal}</h3>
+  <p>This card component was generated and styled dynamically using nrmn.ui tokens.</p>
+</div>`;
+      
+      codeOutputCss.innerText = `.custom-card {
+  padding: ${paddingVal}px;
+  border-radius: ${radiusVal}px;
+  background-color: ${bgMarkup};
+  color: ${textMarkup};${borderMarkup}${shadowCss}
+}`;
+    }
+    
+    codeOutputHtml.innerText = htmlCode;
+    
+    // Re-initialize code copy wrappers and buttons
+    initCodeCopy();
+  }
+  
+  // Bind listeners
+  const controls = [compType, compText, compPadding, compRadius, compBg, compTextColor, compShadow];
+  controls.forEach(control => {
+    if (control) {
+      const eventType = (control.tagName === 'INPUT' && control.type === 'range') || control.tagName === 'TEXTAREA' ? 'input' : 'change';
+      if (control.tagName === 'INPUT' && control.type === 'text') {
+        control.addEventListener('input', updatePlayground);
+      } else {
+        control.addEventListener(eventType, updatePlayground);
+      }
+    }
+  });
+  
+  // Initialize slider value bubbles/tooltips if applicable
+  compPadding.addEventListener('input', (e) => {
+    const bubble = document.getElementById('play-padding-val');
+    if (bubble) bubble.innerText = `${e.target.value}px`;
+  });
+  
+  compRadius.addEventListener('input', (e) => {
+    const bubble = document.getElementById('play-radius-val');
+    if (bubble) bubble.innerText = `${e.target.value}px`;
+  });
+  
+  // Initial run
+  updatePlayground();
+}

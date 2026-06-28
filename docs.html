@@ -122,6 +122,9 @@
         <li class="sidebar-nav-item"><a href="#skeletons">Skeleton Loaders</a></li>
         <li class="sidebar-nav-item"><a href="#widgets">Interactive Widgets</a></li>
         <li class="sidebar-nav-item"><a href="#preloaders">Preloaders & Loaders</a></li>
+        
+        <li class="sidebar-nav-title">Playground</li>
+        <li class="sidebar-nav-item"><a href="#playground">Interactive Playground</a></li>
       </ul>
     </aside>
 
@@ -692,6 +695,102 @@
             <button onclick="simulateTopBarProgress()" class="btn">Trigger Top Progress Bar</button>
             <button onclick="simulateBlockingLoader()" class="btn btn-primary">Trigger Blocking Loader</button>
           </div>
+        </div>
+      </section>
+
+      <section id="playground" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Dynamic Preview</span>
+        <h2>Interactive Playground</h2>
+        <p>Customize components in real-time, preview their style variants, and copy the generated markup directly.</p>
+        
+        <div class="playground-layout">
+          <!-- Left: Controls -->
+          <div class="playground-controls">
+            <div class="form-group">
+              <label class="form-label" for="play-type">Component Type</label>
+              <select class="select" id="play-type">
+                <option value="button">Button</option>
+                <option value="card">Card Component</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-text">Content Text</label>
+              <input type="text" class="input" id="play-text" placeholder="e.g., Click Me" value="Interactive Action">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-padding">Padding: <span id="play-padding-val" style="font-family: var(--font-mono); font-weight: 600;">12px</span></label>
+              <input type="range" class="range-slider" id="play-padding" min="6" max="32" value="12">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-radius">Border Radius: <span id="play-radius-val" style="font-family: var(--font-mono); font-weight: 600;">8px</span></label>
+              <input type="range" class="range-slider" id="play-radius" min="0" max="24" value="8">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-bg">Background Theme</label>
+              <select class="select" id="play-bg">
+                <option value="secondary" selected>Secondary Surface</option>
+                <option value="primary">Primary Surface</option>
+                <option value="tertiary">Tertiary Surface</option>
+                <option value="accent">Accent Foreground</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-textcolor">Text Contrast</label>
+              <select class="select" id="play-textcolor">
+                <option value="primary" selected>High Contrast (Primary)</option>
+                <option value="secondary">Muted (Secondary)</option>
+                <option value="accent-foreground">Accent Contrast</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="play-shadow">Elevation Shadow</label>
+              <select class="select" id="play-shadow">
+                <option value="none" selected>None</option>
+                <option value="sm">Small Shadow</option>
+                <option value="md">Medium Shadow</option>
+                <option value="hover">Lift Shadow</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Right: Live Preview & Code Block Output -->
+          <div>
+            <span class="sub-mono">Live Render Preview</span>
+            <div class="playground-preview-pane" id="play-preview-pane">
+              <!-- Element injected dynamically -->
+            </div>
+            
+            <div class="playground-code-output">
+              <span class="sub-mono">Generated HTML Markup</span>
+              <pre><code id="play-code-html"></code></pre>
+            </div>
+            
+            <div class="playground-code-output" style="margin-top: 1rem;">
+              <span class="sub-mono">Generated CSS Override</span>
+              <pre><code id="play-code-css"></code></pre>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-top: 2rem;">
+          <h4 style="margin-top: 0; margin-bottom: 1rem;">Standard Code Blocks & Copy Test</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Below are sample static code snippets demonstrating standard nrmn.ui resets. Hover to reveal the copy clipboard triggers.</p>
+          
+          <span class="sub-mono">Importing Colors & Base Resets</span>
+          <pre><code>@import url("base.css");
+
+:root {
+  /* Dynamic custom overrides */
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+  --accent: #111111;
+}</code></pre>
         </div>
       </section>
     </main>

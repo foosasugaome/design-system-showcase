@@ -25,5 +25,5 @@
 - [x] Create extra template pages (Split-screen blog post layout, settings console page)
 
 ## [ ] Future Enhancements (Backlog)
-- [ ] **Interactive Code Copy & Playground**: Add 'Copy Code' actions to code blocks and a live input preview panel to adjust padding/radii interactively.
+- [x] **Interactive Code Copy & Playground**: Add 'Copy Code' actions to code blocks and a live input preview panel to adjust padding/radii interactively.
 - [ ] **CSS-Only Charts**: Construct interactive dashboard data charts using pure SVG elements and CSS variables.
