@@ -1853,3 +1853,53 @@ pre code {
 .playground-code-output {
   margin-top: 1.5rem;
 }
+
+/* Settings Page Spacing & Layout Fixes */
+.py-6 {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+/* Vertical Settings Sidebar Tabs */
+.grid.tab-container .tab-btn {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--text-secondary) !important;
+  padding: 0.65rem 1rem !important;
+  border-radius: var(--radius-sm) !important;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast) !important;
+  position: relative !important;
+  text-align: left !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.grid.tab-container .tab-btn::after {
+  display: none !important; /* Hide horizontal underline */
+}
+
+.grid.tab-container .tab-btn:hover {
+  color: var(--text-primary) !important;
+  background-color: var(--bg-tertiary) !important;
+}
+
+.grid.tab-container .tab-btn.active {
+  color: var(--text-primary) !important;
+  background-color: var(--bg-tertiary) !important;
+  font-weight: 600 !important;
+}
+
+.grid.tab-container .tab-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 50%;
+  width: 3px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+}

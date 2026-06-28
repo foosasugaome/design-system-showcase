@@ -27,3 +27,4 @@
 ## [ ] Future Enhancements (Backlog)
 - [x] **Interactive Code Copy & Playground**: Add 'Copy Code' actions to code blocks and a live input preview panel to adjust padding/radii interactively.
 - [ ] **CSS-Only Charts**: Construct interactive dashboard data charts using pure SVG elements and CSS variables.
+- [ ] **HR & Payroll Dashboard Template (`payroll.html`)**: Design a payroll console template featuring pay period summaries, SVG-based earnings distribution charts, pay history tables, and interactive details drawers.
