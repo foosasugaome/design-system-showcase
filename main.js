@@ -257,15 +257,27 @@ function initFormInteractivity() {
  * Theme Switcher Logic (Light/Dark Toggle)
  */
 function initThemeToggle() {
-  const toggleBtn = document.getElementById('theme-toggle');
-  if (!toggleBtn) return;
-  
-  const icon = document.getElementById('theme-toggle-icon');
-  
   // Feather icons SVG path equivalents
   const sunIcon = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
   const moonIcon = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
   
+  function syncToggleIcon() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+    
+    const icon = document.getElementById('theme-toggle-icon');
+    if (!icon) return;
+    
+    const theme = document.documentElement.getAttribute('data-theme') || 'light';
+    if (theme === 'dark') {
+      icon.innerHTML = sunIcon;
+      toggleBtn.setAttribute('title', 'Switch to Light Mode');
+    } else {
+      icon.innerHTML = moonIcon;
+      toggleBtn.setAttribute('title', 'Switch to Dark Mode');
+    }
+  }
+
   // Retrieve saved preference or fallback to system preference
   const savedTheme = localStorage.getItem('theme');
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -276,25 +288,30 @@ function initThemeToggle() {
   }
   
   // Set current theme state
-  applyTheme(currentTheme);
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  syncToggleIcon();
   
-  toggleBtn.addEventListener('click', () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    window.showToast(`Switched to ${newTheme} mode`);
-  });
-  
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (theme === 'dark') {
-      icon.innerHTML = sunIcon;
-      toggleBtn.setAttribute('title', 'Switch to Light Mode');
-    } else {
-      icon.innerHTML = moonIcon;
-      toggleBtn.setAttribute('title', 'Switch to Dark Mode');
+  // Resilient event delegation click listener
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#theme-toggle');
+    if (btn) {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      syncToggleIcon();
+      
+      if (window.showToast) {
+        window.showToast(`Switched to ${newTheme} mode`);
+      }
     }
-  }
+  });
+
+  // Watch for Blazor/SPA DOM swaps to automatically restore icon paths
+  const observer = new MutationObserver(() => {
+    syncToggleIcon();
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
 }
 
 /**
