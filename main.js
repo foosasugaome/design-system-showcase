@@ -34,27 +34,39 @@ const COMMANDS = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-  initThemeToggle();
-  initFontSwitcher();
-  initDropdowns();
-  initMobileMenu();
-  initTabs();
-  initModals();
-  initFormInteractivity();
-  initDashboardLoadingSimulation();
-  initCommandPalette();
-  initAccordions();
-  initDrawers();
-  initAutocompleteInput();
-  initPasswordValidator();
-  initSegmentedControls();
-  initRangeSliders();
-  initFileUploader();
-  initEmailSuggestion();
-  initPhoneFormatter();
-  initEmailValidation();
-  initCodeCopy();
-  initPlayground();
+  const initializers = [
+    initThemeToggle,
+    initFontSwitcher,
+    initDropdowns,
+    initMobileMenu,
+    initTabs,
+    initModals,
+    initFormInteractivity,
+    initDashboardLoadingSimulation,
+    initCommandPalette,
+    initAccordions,
+    initDrawers,
+    initAutocompleteInput,
+    initPasswordValidator,
+    initSegmentedControls,
+    initRangeSliders,
+    initFileUploader,
+    initEmailSuggestion,
+    initPhoneFormatter,
+    initEmailValidation,
+    initCodeCopy,
+    initPlayground
+  ];
+  
+  initializers.forEach(fn => {
+    try {
+      if (typeof fn === 'function') {
+        fn();
+      }
+    } catch (e) {
+      console.warn(`Failed to initialize ${fn.name}:`, e);
+    }
+  });
 });
 
 /**
@@ -269,12 +281,14 @@ function initThemeToggle() {
     if (!icon) return;
     
     const theme = document.documentElement.getAttribute('data-theme') || 'light';
-    if (theme === 'dark') {
-      icon.innerHTML = sunIcon;
-      toggleBtn.setAttribute('title', 'Switch to Light Mode');
-    } else {
-      icon.innerHTML = moonIcon;
-      toggleBtn.setAttribute('title', 'Switch to Dark Mode');
+    const targetIcon = theme === 'dark' ? sunIcon : moonIcon;
+    const targetTitle = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    
+    if (icon.innerHTML !== targetIcon) {
+      icon.innerHTML = targetIcon;
+    }
+    if (toggleBtn.getAttribute('title') !== targetTitle) {
+      toggleBtn.setAttribute('title', targetTitle);
     }
   }
 
@@ -317,6 +331,9 @@ function initThemeToggle() {
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
+
+  // Bulletproof periodic fallback check (every 300ms) to ensure sync in all SPAs
+  setInterval(syncToggleIcon, 300);
 }
 
 /**
