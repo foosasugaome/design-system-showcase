@@ -28,3 +28,8 @@
 - [x] **Interactive Code Copy & Playground**: Add 'Copy Code' actions to code blocks and a live input preview panel to adjust padding/radii interactively.
 - [ ] **CSS-Only Charts**: Construct interactive dashboard data charts using pure SVG elements and CSS variables.
 - [ ] **HR & Payroll Dashboard Template (`payroll.html`)**: Design a payroll console template featuring pay period summaries, SVG-based earnings distribution charts, pay history tables, and interactive details drawers.
+- [ ] **Intranet Portal Home Page (`intranet-hub.html`)**: Central landing page featuring news cards, quick navigation grids, and employee sidebar widgets.
+- [ ] **IT Service Desk Template (`it-helpdesk.html`)**: Support catalog featuring ticket forms, drag uploader, autocomplete KB search, and active ticket SLA lists.
+- [ ] **Meeting Room Booking Template (`room-booking.html`)**: Reservation system featuring schedule matrices, amenity indicators, and calendar picker forms.
+- [ ] **Expense Claims Portal (`expense-tracker.html`)**: Claim ledger featuring attachment uploads, progress approval tracks, and YTD budget metrics.
+- [ ] **Company Wiki & Policy Center (`wiki.html`)**: Folder navigation tree menus, markdown reading panes, and interactive history tabs.
