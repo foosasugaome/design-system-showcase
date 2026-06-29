@@ -52,6 +52,7 @@
                 <li><a href="docs.html#inputs">Inputs & Selects</a></li>
                 <li><a href="docs.html#cards">Cards</a></li>
                 <li><a href="docs.html#tabs">Tabs</a></li>
+                <li><a href="docs.html#breadcrumbs">Breadcrumbs</a></li>
                 <li><a href="docs.html#alerts">Alerts & Dialogs</a></li>
                 <li><a href="docs.html#tables">Tables</a></li>
                 <li><a href="docs.html#skeletons">Skeleton Loaders</a></li>
@@ -117,6 +118,7 @@
         <li class="sidebar-nav-title">Components</li>
         <li class="sidebar-nav-item"><a href="#cards">Cards</a></li>
         <li class="sidebar-nav-item"><a href="#tabs">Tabs</a></li>
+        <li class="sidebar-nav-item"><a href="#breadcrumbs">Breadcrumbs</a></li>
         <li class="sidebar-nav-item"><a href="#alerts">Alerts & Dialogs</a></li>
         <li class="sidebar-nav-item"><a href="#tables">Tables</a></li>
         <li class="sidebar-nav-item"><a href="#skeletons">Skeleton Loaders</a></li>
@@ -537,6 +539,100 @@
               <h4>Developer Credentials</h4>
               <p>Generate secure API tokens in your environment settings dashboard to read resources.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="breadcrumbs" class="mb-6" style="scroll-margin-top: 80px;">
+        <span class="sub-mono">Navigation Trails</span>
+        <h2>Breadcrumbs</h2>
+        <p>A responsive navigation aid supporting custom separators, background container pills, inline icons, and collapsible dropdown folders.</p>
+        
+        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
+          <!-- 1. Default Slash Separator -->
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 0.75rem;">Slash Separator (Default)</h4>
+            <nav aria-label="Breadcrumb" class="breadcrumb">
+              <ol>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Components</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Breadcrumbs</li>
+              </ol>
+            </nav>
+          </div>
+          
+          <!-- 2. Chevron Separator -->
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 0.75rem;">Chevron Separator</h4>
+            <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb-chevron">
+              <ol>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Components</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Breadcrumbs</li>
+              </ol>
+            </nav>
+          </div>
+          
+          <!-- 3. Dot Separator -->
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 0.75rem;">Dot Separator</h4>
+            <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb-dot">
+              <ol>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Components</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Breadcrumbs</li>
+              </ol>
+            </nav>
+          </div>
+
+          <!-- 4. Background Pill with Icons -->
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 0.75rem;">Pill Surface with SVG Icons</h4>
+            <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb-chevron breadcrumb-pill">
+              <ol>
+                <li class="breadcrumb-item">
+                  <a href="#">
+                    <svg class="breadcrumb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="#">
+                    <svg class="breadcrumb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>Components</span>
+                  </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Breadcrumbs</li>
+              </ol>
+            </nav>
+          </div>
+
+          <!-- 5. Collapsible Dropdown Breadcrumbs -->
+          <div>
+            <h4 style="margin-top: 0; margin-bottom: 0.75rem;">Collapsible Dropdown (Interactive)</h4>
+            <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1rem;">Click the ellipsis (<code>...</code>) to expand the hidden intermediate categories dynamically.</p>
+            <nav aria-label="Breadcrumb" class="breadcrumb breadcrumb-chevron">
+              <ol>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item breadcrumb-dropdown">
+                  <button class="breadcrumb-dropdown-trigger" aria-label="Show intermediate paths" aria-haspopup="true">...</button>
+                  <ul class="breadcrumb-dropdown-menu">
+                    <li><a href="#">System</a></li>
+                    <li><a href="#">Libraries</a></li>
+                    <li><a href="#">Showcases</a></li>
+                  </ul>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Components</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Breadcrumbs</li>
+              </ol>
+            </nav>
           </div>
         </div>
       </section>

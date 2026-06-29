@@ -12,6 +12,7 @@
 
 ## [ ] Phase 2: Refinements & User Feedback (In Progress)
 - [ ] Incorporate initial user feedback on spacing and layout
+- [x] Create Breadcrumb Styles (Slash, Chevron, Dot, Pill, and interactive Collapsible Dropdowns)
 - [x] Add active hover indicator styling on the vertical navigation menus
 - [x] Implement an automated dark mode manual switch button (relying on local storage state override)
 - [x] Integrate Inter, Roboto, and Ubuntu Google Fonts with dynamic navbar switcher

@@ -1903,3 +1903,204 @@ pre code {
   background-color: var(--text-primary);
   border-radius: 2px;
 }
+
+/* ==========================================================================
+   Breadcrumbs Component
+   ========================================================================== */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.breadcrumb-item a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.breadcrumb-item a:hover {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
+}
+
+.breadcrumb-item.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.breadcrumb-item.active a {
+  color: var(--text-primary);
+  pointer-events: none;
+  border-bottom-color: transparent;
+}
+
+/* Breadcrumb Item Separator (Slash style default) */
+.breadcrumb ol > .breadcrumb-item + .breadcrumb-item::before {
+  content: "/";
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: var(--text-tertiary);
+  user-select: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* Chevron separator style */
+.breadcrumb-chevron ol > .breadcrumb-item + .breadcrumb-item::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid var(--text-tertiary);
+  border-bottom: 1.5px solid var(--text-tertiary);
+  transform: rotate(-45deg);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* Dot separator style */
+.breadcrumb-dot ol > .breadcrumb-item + .breadcrumb-item::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--text-tertiary);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* Breadcrumbs with Background Pill */
+.breadcrumb-pill {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: inline-flex;
+}
+
+/* Breadcrumbs with SVG Icons */
+.breadcrumb-item-icon {
+  width: 14px;
+  height: 14px;
+  color: currentColor;
+}
+
+/* Collapsible Dropdown Breadcrumb */
+.breadcrumb-dropdown {
+  position: relative;
+}
+
+.breadcrumb-dropdown-trigger {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.breadcrumb-dropdown-trigger:hover,
+.breadcrumb-dropdown-trigger:focus-visible {
+  background-color: var(--border-hover);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.breadcrumb-dropdown-trigger:active {
+  transform: scale(0.95);
+}
+
+.breadcrumb-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+  min-width: 130px;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.breadcrumb-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.breadcrumb-dropdown.open .breadcrumb-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.breadcrumb-dropdown-menu li {
+  width: 100%;
+}
+
+.breadcrumb-dropdown-menu li a {
+  display: block;
+  padding: 0.45rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: none !important;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.breadcrumb-dropdown-menu li a:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}

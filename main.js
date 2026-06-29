@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initPhoneFormatter,
     initEmailValidation,
     initCodeCopy,
-    initPlayground
+    initPlayground,
+    initBreadcrumbs
   ];
   
   initializers.forEach(fn => {
@@ -1469,3 +1470,37 @@ function initPlayground() {
   // Initial run
   updatePlayground();
 }
+
+/**
+ * Breadcrumb Dropdown Interaction
+ */
+function initBreadcrumbs() {
+  const dropdowns = document.querySelectorAll('.breadcrumb-dropdown');
+  
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector('.breadcrumb-dropdown-trigger');
+    if (!trigger) return;
+    
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Close other breadcrumb dropdowns
+      dropdowns.forEach(other => {
+        if (other !== dropdown) {
+          other.classList.remove('open');
+        }
+      });
+      
+      dropdown.classList.toggle('open');
+    });
+  });
+  
+  // Close all breadcrumb dropdowns on outside click
+  document.addEventListener('click', () => {
+    dropdowns.forEach(dropdown => {
+      dropdown.classList.remove('open');
+    });
+  });
+}
+
